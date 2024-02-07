@@ -7,33 +7,33 @@ trigger:
 - master
 
 pool:
-  vmImage: windows
+  vmImage: ubuntu-latest
+
 steps:
-- task: JFrogToolsInstaller@1
-  inputs:
-    artifactoryConnection: 'hts2-new'
-    cliInstallationRepo: 'jfrog-cli-v2-new'
-    installExtractors: true
-    extractorsInstallationRepo: 'extractors'
-- task: JFrogMaven@1
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'install'
-    options: '-DXms1024m' 
-    artifactoryResolverService: 'hts2-new'
-    targetResolveReleaseRepo: 'mvn-libs-release'
-    targetResolveSnapshotRepo: 'mvn-libs-snapshot'
-    artifactoryDeployService: 'hts2-new'
-    targetDeployReleaseRepo: 'mvn-libs-release-local'
-    targetDeploySnapshotRepo: 'mvn-libs-snapshot-local'
-    collectBuildInfo: true
-    buildName: '$(Build.DefinitionName)'
-    buildNumber: '$(Build.BuildNumber)'
-    includeEnvVars: true
-    projectKey: xray
-- task: JFrogPublishBuildInfo@1
-  inputs:
-    artifactoryConnection: 'hts2-new'
-    buildName: '$(Build.DefinitionName)'
-    buildNumber: '$(Build.BuildNumber)'
-    projectKey: xray
+  - task: JFrogMaven@1
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'clean install'
+      artifactoryResolverService: 'kimt1'
+      targetResolveReleaseRepo: 'test-plk-libs-release'
+      targetResolveSnapshotRepo: 'test-plk-libs-snapshot'
+      artifactoryDeployService: 'kimt1'
+      targetDeployReleaseRepo: 'test-plk-libs-release'
+      targetDeploySnapshotRepo: 'test-plk-libs-snapshot'
+      collectBuildInfo: true
+      buildName: '$(Build.DefinitionName)'
+      buildNumber: '$(Build.BuildNumber)'
+      includeEnvVars: true
+      javaHomeOption: 'JDKVersion'
+  - task: JFrogPublishBuildInfo@1
+    inputs:
+      artifactoryConnection: 'kimt1'
+      buildName: '$(Build.DefinitionName)'
+      buildNumber: '$(Build.BuildNumber)'
+  - task: JFrogBuildScan@1
+    inputs:
+      xrayConnection: 'kimtxray'
+      buildName: '$(Build.DefinitionName)'
+      buildNumber: '$(Build.BuildNumber)'
+      allowFailBuild: true
+      vuln: false
