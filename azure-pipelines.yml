@@ -30,7 +30,10 @@ steps:
       artifactoryConnection: 'kimt1'
       buildName: '$(Build.DefinitionName)'
       buildNumber: '$(Build.BuildNumber)'
-  - task: JFrogBuildScan@1
+  - task: Delay@1
+    inputs:
+      delayForMinutes: '1'
+  - task: JFrogBuildScan@1 
     inputs:
       xrayConnection: 'kimtxray'
       buildName: '$(Build.DefinitionName)'
