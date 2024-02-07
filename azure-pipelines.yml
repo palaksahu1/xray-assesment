@@ -30,6 +30,11 @@ steps:
       artifactoryConnection: 'kimt1'
       buildName: '$(Build.DefinitionName)'
       buildNumber: '$(Build.BuildNumber)'
+# Delay v1
+# Delay further execution of a workflow by a fixed time.
+  - task: Delay@1
+    inputs:
+      delayForMinutes: '1' 
   - task: JFrogBuildScan@1 
     inputs:
       xrayConnection: 'kimtxray'
