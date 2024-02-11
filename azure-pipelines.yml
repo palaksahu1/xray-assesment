@@ -34,7 +34,7 @@ steps:
   - task: PowerShell@2
     inputs:
       targetType: 'inline'
-      script: 'Start-Sleep -Seconds 120'
+      script: 'Start-Sleep -Seconds 240'
 
   - task: JFrogBuildScan@1 
     inputs:
