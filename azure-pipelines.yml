@@ -31,11 +31,3 @@ steps:
       buildName: '$(Build.DefinitionName)'
       buildNumber: '$(Build.BuildNumber)'
 
-
-  - task: JFrogBuildScan@1 
-    inputs:
-      xrayConnection: 'kimtxray'
-      buildName: '$(Build.DefinitionName)'
-      buildNumber: '$(Build.BuildNumber)'
-      allowFailBuild: true
-      vuln: false
